@@ -27,7 +27,7 @@ namespace PSAdvancedShortcut.Functions
 
         [Parameter(
             Mandatory = false,
-            HelpMessage = "Arguments to pass to the target")]
+            HelpMessage = "Arguments to pass to the target on execution")]
         public string Arguments { get; set; }
 
         [Parameter(
@@ -45,15 +45,15 @@ namespace PSAdvancedShortcut.Functions
             HelpMessage = "Description of the shortcut")]
         public string Description { get; set; }
 
-        [Parameter(
-            Mandatory = false,
-            HelpMessage = "Icon path of a binary which contains an icon")]
-        public string IconPath { get; set; }
+        // [Parameter(
+        //     Mandatory = false,
+        //     HelpMessage = "Icon path of a binary which contains an icon")]
+        // public string IconPath { get; set; }
 
-        [Parameter(
-            Mandatory = false,
-            HelpMessage = "Index of the icon in the binary specified in IconPath")]
-        public int IconIndex { get; set; }
+        // [Parameter(
+        //     Mandatory = false,
+        //     HelpMessage = "Index of the icon in the binary specified in IconPath")]
+        // public int IconIndex { get; set; }
 
         // [Parameter(
         //     Mandatory = false,
@@ -62,12 +62,12 @@ namespace PSAdvancedShortcut.Functions
 
         [Parameter(
             Mandatory = false,
-            HelpMessage = "The AUMID of the target")]
+            HelpMessage = "The Application User Model Id of the target, used by Windows to associate disperate processes as a single application")]
         public string AppUserModelId { get; set; }
 
         [Parameter(
             Mandatory = false,
-            HelpMessage = "The toast activator class id of the target")]
+            HelpMessage = "The Toast Activator Class Id of the target, used by Windows to find an application to execute when a person taps a notification in the Action Center")]
         public Guid ToastActivatorClassId { get; set; }
 
         protected override void ProcessRecord()
@@ -83,7 +83,7 @@ namespace PSAdvancedShortcut.Functions
             if (!string.IsNullOrEmpty(WorkingDirectory)) shortcut.SetWorkingDirectory(WorkingDirectory);
             if (WindowStyle.HasValue) shortcut.SetShowCmd((uint)WindowStyle.Value);
             if (!string.IsNullOrEmpty(Description)) shortcut.SetDescription(Description);
-            if (!string.IsNullOrEmpty(IconPath)) shortcut.SetIconLocation(IconPath, IconIndex);
+            //if (!string.IsNullOrEmpty(IconPath)) shortcut.SetIconLocation(IconPath, IconIndex);
             //if (!string.IsNullOrEmpty(Hotkey)) shortcut.SetHotKey(Hotkey);
 
             var shortcutExtended = (IPropertyStore)shortcut;

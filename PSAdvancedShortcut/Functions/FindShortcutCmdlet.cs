@@ -20,7 +20,7 @@ namespace PSAdvancedShortcut.Functions
 
         [Parameter(
             Mandatory = false,
-            HelpMessage = "Recurse the search into subdirectories, including network drives and symbolic links")]
+            HelpMessage = "Recursively search into subdirectories, including network drives and symbolic links")]
         public bool Recurse { get; set; }
 
         protected override void ProcessRecord()
