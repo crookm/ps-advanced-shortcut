@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSAdvancedShortcut", "PSAdvancedShortcut\PSAdvancedShortcut.csproj", "{4A281F40-69B8-4FBD-83D7-832D6E54D2B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A281F40-69B8-4FBD-83D7-832D6E54D2B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A281F40-69B8-4FBD-83D7-832D6E54D2B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A281F40-69B8-4FBD-83D7-832D6E54D2B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A281F40-69B8-4FBD-83D7-832D6E54D2B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF40F908-1E99-4C9C-9E4B-F406603359D4}
+	EndGlobalSection
+EndGlobal
