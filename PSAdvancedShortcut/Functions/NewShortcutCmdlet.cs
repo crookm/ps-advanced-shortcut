@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Management.Automation;
 using PSAdvancedShortcut.Contracts;
 using PSAdvancedShortcut.Interop;
@@ -11,9 +12,14 @@ namespace PSAdvancedShortcut.Functions
     public class NewShortcutCmdlet : PSCmdlet
     {
         [Parameter(
-            Mandatory = true,
-            HelpMessage = "File path to where the shortcut should be created")]
+            Mandatory = false,
+            HelpMessage = "File path to where the shortcut should be created under, defaults to current directory")]
         public string Path { get; set; }
+
+        [Parameter(
+            Mandatory = true,
+            HelpMessage = "Name for the shortcut, extension will be added if not included")]
+        public string Name { get; set; }
 
         [Parameter(
             Mandatory = true,
@@ -72,8 +78,17 @@ namespace PSAdvancedShortcut.Functions
 
         protected override void ProcessRecord()
         {
-            if (!Path.EndsWith(".lnk")) Path += ".lnk";
-            if (File.Exists(Path) && !Force.IsPresent)
+            if (!Name.EndsWith(".lnk")) Name += ".lnk";
+            if (string.IsNullOrEmpty(Path))
+            {
+                Path = SessionState.Path.CurrentFileSystemLocation.Path;
+                WriteVerbose("Path parameter was not set, defaulting to current PS session filesystem directory");
+            }
+
+            var fullPath = System.IO.Path.Combine(Path, Name);
+            WriteVerbose($"Shortcut will be saved as: {fullPath}");
+
+            if (File.Exists(fullPath) && !Force.IsPresent)
                 throw new ArgumentException("File already exists at destination, and 'Force' parameter was not specified");
 
             var shortcut = (IShellLinkW)new CShellLink();
@@ -110,7 +125,7 @@ namespace PSAdvancedShortcut.Functions
             }
 
             var shortcutPersist = (IPersistFile)shortcut;
-            if (shortcutPersist.Save(Path, true) > 1)
+            if (shortcutPersist.Save(fullPath, true) > 1)
                 throw new Exception("Failed to save shortcut to path specified");
         }
     }
