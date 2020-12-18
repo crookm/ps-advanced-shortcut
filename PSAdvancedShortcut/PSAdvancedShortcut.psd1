@@ -14,7 +14,6 @@
     GUID              = 'd65f8fae-52e0-4688-a7f7-474364f7ab64'
 
     Author            = 'Matt Crook'
-    # CompanyName       = ''
     Copyright         = '(c) Matt Crook 2020. All rights reserved.'
     Description       = 'Advanced shortcut appliance to create and modify shortcut file properties that are not easily accessible'
 
