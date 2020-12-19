@@ -15,7 +15,7 @@
 
     Author            = 'Matt Crook'
     Copyright         = '(c) Matt Crook 2020. All rights reserved.'
-    Description       = 'Advanced shortcut appliance to create and modify shortcut file properties that are not easily accessible'
+    Description       = 'Advanced shortcut appliance to create and modify shortcut file properties that are not easily accessible - such as the AUMID (App User Model ID) and Toast Activator Class ID, both of which are important for using the Windows Notification Center Toast functionality'
 
     PowerShellVersion = '2.0'
 
@@ -37,13 +37,13 @@
     PrivateData       = @{
         PSData = @{
             # Tags applied to this module. These help with module discovery in online galleries.
-            # Tags = @()
+            Tags = @('shortcut','filesystem','windows','shell','toasts','aumid')
 
             # A URL to the license for this module.
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            # ProjectUri = ''
+            ProjectUri = 'https://github.com/crookm/ps-advanced-shortcut'
 
             # A URL to an icon representing this module.
             # IconUri = ''

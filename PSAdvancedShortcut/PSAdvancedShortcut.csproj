@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Choco">
-    <PackageId>ps-advanced-shortcut</PackageId>
+    <PackageId>PSAdvancedShortcut</PackageId>
     <Version>0.1.0</Version>
     <Authors>Matthew Crook</Authors>
+    <PackageTags>shortcut;filesystem;windows;shell;windows toasts;application model user id</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludeDllsInPackage</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -12,7 +16,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <NoWarn>1701;1702;NU5111;NU5128</NoWarn>
+    <NoWarn>1701;1702;NU5111;NU5128;NU5100</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,5 +43,15 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  
+  <!-- Package contents -->
+  <ItemGroup>
+    <Content Include="PSAdvancedShortcut.psd1" Pack="true" PackagePath="/" />
+  </ItemGroup>
+  <Target Name="IncludeDllsInPackage">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(OutputPath)/*.dll" Exclude="$(OutputPath)/System.Management.Automation.dll" PackagePath="/" />
+    </ItemGroup>
+  </Target>
 
 </Project>
