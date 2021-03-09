@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using IWshRuntimeLibrary;
@@ -44,7 +45,7 @@ namespace PSAdvancedShortcut.Functions
             WriteVerbose($"Checking {files.Count()} shortcut files for the target: {Target}");
             var shell = new WshShell();
             var matches = files
-                .Where(file => ((IWshShortcut)shell.CreateShortcut(file)).TargetPath == Target)
+                .Where(file => string.Equals(((IWshShortcut)shell.CreateShortcut(file)).TargetPath, Target, StringComparison.OrdinalIgnoreCase))
                 .ToArray();
             WriteVerbose($"Found {matches.Count()} shortcut matches");
             WriteObject(matches);
