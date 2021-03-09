@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Management.Automation;
 using PSAdvancedShortcut.Contracts;
@@ -51,15 +51,15 @@ namespace PSAdvancedShortcut.Functions
             HelpMessage = "Description of the shortcut")]
         public string Description { get; set; }
 
-        // [Parameter(
-        //     Mandatory = false,
-        //     HelpMessage = "Icon path of a binary which contains an icon")]
-        // public string IconPath { get; set; }
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Path to a file with icons embedded in it, this is usually a .ico file - but could also be a .icl, .exe, or .dll")]
+        public string IconPath { get; set; }
 
-        // [Parameter(
-        //     Mandatory = false,
-        //     HelpMessage = "Index of the icon in the binary specified in IconPath")]
-        // public int IconIndex { get; set; }
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "If the file specified in IconPath has multiple icons available, you may specify the index here")]
+        public int IconIndex { get; set; }
 
         // [Parameter(
         //     Mandatory = false,
@@ -98,8 +98,8 @@ namespace PSAdvancedShortcut.Functions
             if (!string.IsNullOrEmpty(WorkingDirectory)) shortcut.SetWorkingDirectory(WorkingDirectory);
             if (WindowStyle.HasValue) shortcut.SetShowCmd((uint)WindowStyle.Value);
             if (!string.IsNullOrEmpty(Description)) shortcut.SetDescription(Description);
-            //if (!string.IsNullOrEmpty(IconPath)) shortcut.SetIconLocation(IconPath, IconIndex);
-            //if (!string.IsNullOrEmpty(Hotkey)) shortcut.SetHotKey(Hotkey);
+            if (!string.IsNullOrEmpty(IconPath)) shortcut.SetIconLocation(IconPath, IconIndex);
+            //if (!string.IsNullOrEmpty(HotKey)) shortcut.SetHotKey(HotKey);
 
             var shortcutExtended = (IPropertyStore)shortcut;
             if (!string.IsNullOrEmpty(AppUserModelId))
