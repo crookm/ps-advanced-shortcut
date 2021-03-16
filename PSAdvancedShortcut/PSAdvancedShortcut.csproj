@@ -2,7 +2,7 @@
 
   <PropertyGroup Label="Choco">
     <PackageId>PSAdvancedShortcut</PackageId>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>Matthew Crook</Authors>
     <PackageTags>shortcut;filesystem;windows;shell;windows toasts;application model user id</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

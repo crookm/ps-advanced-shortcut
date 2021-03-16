@@ -117,7 +117,7 @@ namespace PSAdvancedShortcut.Functions
             {
                 using (var toastActivatorIdVariant = new PropVariant(ToastActivatorClassId.ToString("B")))
                 {
-                    if (shortcutExtended.SetValue(AppUserModel.ID, toastActivatorIdVariant) > 1)
+                    if (shortcutExtended.SetValue(AppUserModel.ToastActivatorCLSID, toastActivatorIdVariant) > 1)
                         throw new Exception("Failed to set Toast Activator Class Id property");
                     if (shortcutExtended.Commit() > 1)
                         throw new Exception("Failed to commit Toast Activator Class Id property");
