@@ -117,6 +117,8 @@ None
 
 Finds a shortcut that links to the specified target, within a specified directory.
 
+NOTE: This cmdlet does not currently work on Windows 7
+
 ```powershell
 Find-Shortcut
     -Target <string>
