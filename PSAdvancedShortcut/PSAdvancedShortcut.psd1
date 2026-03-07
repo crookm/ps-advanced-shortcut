@@ -6,7 +6,7 @@
 #
 
 @{
-    ModuleVersion     = '0.2.1'
+    ModuleVersion     = '0.2.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -43,7 +43,7 @@
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/crookm/ps-advanced-shortcut'
+            ProjectUri = 'https://enduringtech.dev/matt/ps-advanced-shortcut'
 
             # A URL to an icon representing this module.
             # IconUri = ''
