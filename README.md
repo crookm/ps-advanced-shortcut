@@ -42,6 +42,7 @@ New-Shortcut
     [-WindowStyle <WindowStyle>]
     [-IconPath <string>]
     [-IconIndex <int>]
+    [-Hotkey <string>]
     [-AppUserModelId <string>]
     [-ToastActivatorClassId <Guid>]
     [-Force]
@@ -93,6 +94,11 @@ The full path to a file which contains an icon. This is usually a .ico file, but
 
 ##### `-IconIndex`
 Icon files, as well as binaries, may contain multiple icons. You can specify the offset with this parameter. The index starts at zero.
+
+##### `-Hotkey`
+A `+`-delimited string specifying the keyboard shortcut that will activate this shortcut. Case-insensitive. Valid modifiers are `Ctrl`, `Alt`, and `Shift`. Valid keys are `A`-`Z`, `0`-`9`, and `F1`-`F24`. Example: `"Ctrl+Alt+T"`, `"Ctrl+Shift+F5"`.
+
+Note that Windows only activates shortcut hotkeys for `.lnk` files placed on the Desktop or in the Start Menu Programs folder (including subfolders). A warning will be emitted if the shortcut is being saved elsewhere. A sign-out/sign-in or Explorer restart may be required for the hotkey to take effect after creation.
 
 ##### `-AppUserModelId`
 The AUMID to set for this shortcut. The format typically follows Java's [package name rules](https://docs.oracle.com/javase/specs/jls/se6/html/packages.html#7.7), but can be any string. This only applies to Windows 8 and above.

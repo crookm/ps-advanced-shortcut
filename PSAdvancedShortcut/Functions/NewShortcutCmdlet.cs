@@ -61,10 +61,10 @@ namespace PSAdvancedShortcut.Functions
             HelpMessage = "If the file specified in IconPath has multiple icons available, you may specify the index here")]
         public int IconIndex { get; set; }
 
-        // [Parameter(
-        //     Mandatory = false,
-        //     HelpMessage = "HotKey that will open the shortcut")]
-        // public string HotKey { get; set; }
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "Hotkey that will activate the shortcut, e.g. \"Ctrl+Alt+T\". Case-insensitive. Valid modifiers: Ctrl, Alt, Shift. Valid keys: A-Z, 0-9, F1-F24. Only works when the shortcut is placed on the Desktop or in the Start Menu Programs folder.")]
+        public string Hotkey { get; set; }
 
         [Parameter(
             Mandatory = false,
@@ -99,7 +99,11 @@ namespace PSAdvancedShortcut.Functions
             if (WindowStyle.HasValue) shortcut.SetShowCmd((uint)WindowStyle.Value);
             if (!string.IsNullOrEmpty(Description)) shortcut.SetDescription(Description);
             if (!string.IsNullOrEmpty(IconPath)) shortcut.SetIconLocation(IconPath, IconIndex);
-            //if (!string.IsNullOrEmpty(HotKey)) shortcut.SetHotKey(HotKey);
+            if (!string.IsNullOrEmpty(Hotkey))
+            {
+                var encoded = HotKeyEncoder.Encode(Hotkey); // throws ArgumentException on invalid input
+                shortcut.SetHotKey(encoded);
+            }
 
             var shortcutExtended = (IPropertyStore)shortcut;
             if (!string.IsNullOrEmpty(AppUserModelId))
