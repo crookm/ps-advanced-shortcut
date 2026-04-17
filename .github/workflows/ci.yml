@@ -32,7 +32,17 @@ jobs:
           throw "Visual Studio installation not found"
         }
 
-        $installer = Join-Path $vsInstallPath "Installer\vs_installer.exe"
+        $installerRoot = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer"
+        $installer = Join-Path $installerRoot "vs_installer.exe"
+
+        if (-not (Test-Path $installer)) {
+          $installer = Join-Path $installerRoot "setup.exe"
+        }
+
+        if (-not (Test-Path $installer)) {
+          throw "Visual Studio installer executable not found"
+        }
+
         & $installer modify --installPath "$vsInstallPath" --add Microsoft.Net.Component.3.5.DeveloperTools --quiet --wait --norestart
 
     - name: Build
