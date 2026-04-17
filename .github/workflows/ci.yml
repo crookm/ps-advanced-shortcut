@@ -8,18 +8,30 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    
+
     - name: Setup .NET 10
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: '10.0.x'
     - name: Setup .NET Framework 3.5
       run: Enable-WindowsOptionalFeature -Online -FeatureName "Netfx3" -All
+    - name: Setup .NET Framework
+      uses: microsoft/setup-msbuild@v3
+
+    - name: Configure Visual Studio
+      run: |
+        $ErrorActionPreference = 'Stop'
+        $vsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
+        if (Test-Path $vsInstallerPath) {
+          Start-Process -FilePath $vsInstallerPath -ArgumentList "modify --installPath `"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools`" --add Microsoft.Net.Component.3.5.DeveloperTools --quiet --wait" -NoNewWindow -Wait
+        } else {
+          Write-Error "Visual Studio Installer not found at $vsInstallerPath"
+        }
 
     - name: Build
       run: dotnet msbuild -property:Configuration=Release
