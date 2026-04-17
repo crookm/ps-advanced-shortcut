@@ -18,12 +18,8 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: '10.0.x'
-
     - name: Setup .NET Framework 3.5
       run: Enable-WindowsOptionalFeature -Online -FeatureName "Netfx3" -All
 
-    - name: Restore
-      run: dotnet restore PSAdvancedShortcut.sln
-
     - name: Build
-      run: dotnet build PSAdvancedShortcut.sln --configuration Release --no-restore
+      run: dotnet msbuild -property:Configuration=Release
