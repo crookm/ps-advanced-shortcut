@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-2025
 
     steps:
     - name: Checkout
@@ -23,15 +23,17 @@ jobs:
     - name: Setup .NET Framework
       uses: microsoft/setup-msbuild@v3
 
-    - name: Configure Visual Studio
+    - name: Configure Visual Studio Workload
       run: |
-        $ErrorActionPreference = 'Stop'
-        $vsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
-        if (Test-Path $vsInstallerPath) {
-          Start-Process -FilePath $vsInstallerPath -ArgumentList "modify --installPath `"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools`" --add Microsoft.Net.Component.3.5.DeveloperTools --quiet --wait" -NoNewWindow -Wait
-        } else {
-          Write-Error "Visual Studio Installer not found at $vsInstallerPath"
+        $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+        $vsInstallPath = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+
+        if (-not $vsInstallPath) {
+          throw "Visual Studio installation not found"
         }
+
+        $installer = Join-Path $vsInstallPath "Installer\vs_installer.exe"
+        & $installer modify --installPath "$vsInstallPath" --add Microsoft.Net.Component.3.5.DeveloperTools --quiet --wait --norestart
 
     - name: Build
       run: dotnet msbuild -property:Configuration=Release
