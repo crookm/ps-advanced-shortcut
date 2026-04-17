@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-2025
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+    - name: Setup .NET Framework 3.5
+      run: Enable-WindowsOptionalFeature -Online -FeatureName "Netfx3" -All
+    - name: Setup .NET Framework
+      uses: microsoft/setup-msbuild@v3
+
+    - name: Configure Visual Studio Workload
+      run: |
+        $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+        $vsInstallPath = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+
+        if (-not $vsInstallPath) {
+          throw "Visual Studio installation not found"
+        }
+
+        $installerRoot = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer"
+        $installer = Join-Path $installerRoot "vs_installer.exe"
+
+        if (-not (Test-Path $installer)) {
+          $installer = Join-Path $installerRoot "setup.exe"
+        }
+
+        if (-not (Test-Path $installer)) {
+          throw "Visual Studio installer executable not found"
+        }
+
+        & $installer modify --installPath "$vsInstallPath" --add Microsoft.Net.Component.3.5.DeveloperTools --quiet --wait --norestart
+
+    - name: Build
+      run: dotnet msbuild -property:Configuration=Release
