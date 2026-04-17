@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET Framework 3.5
+      run: Enable-WindowsOptionalFeature -Online -FeatureName "Netfx3" -All
+
+    - name: Build
+      run: C:\Windows\Microsoft.NET\Framework\v3.5\MSBuild.exe PSAdvancedShortcut.sln /p:Configuration=Release
